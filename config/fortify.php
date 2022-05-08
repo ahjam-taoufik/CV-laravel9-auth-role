@@ -1,7 +1,8 @@
 <?php
 
-use App\Providers\RouteServiceProvider;
 use Laravel\Fortify\Features;
+use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
 
 return [
 
@@ -61,7 +62,18 @@ return [
     |
     */
 
-    'home' => RouteServiceProvider::HOME,
+    // 'home' => RouteServiceProvider::HOME,
+    'home' => function(){
+        
+        if(Auth::user()->roles->pluck('name')->contains('admin')){
+            return route('admin.users.index');
+        }
+        if(Auth::user()->roles->pluck('name')->contains('author')){
+            return route('admin.users.index');
+        }
+
+        return route('dashboard');
+    },
 
     /*
     |--------------------------------------------------------------------------
