@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return 'list of users';
+
+        $users = User::latest()->get();
+       
+        return view('admin.users.index')->with('users', $users);
     }
 
     /**
@@ -58,7 +67,8 @@ class AdminController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $roles=Role::all();
+        return view('admin.users.edit',['user'=> $user,'roles'=>$roles]);
     }
 
     /**
@@ -70,7 +80,9 @@ class AdminController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+      
+        $user->roles()->sync($request->roles);
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -81,6 +93,10 @@ class AdminController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->roles()->detach();
+        $user->delete();
+        return redirect()->route('admin.users.index');
+        
+
     }
 }

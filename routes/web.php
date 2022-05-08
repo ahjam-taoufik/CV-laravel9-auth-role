@@ -28,5 +28,12 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::resource('admin/users', AdminController::class)->names('admin');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    Route::resource('users', AdminController::class);
+});
+
+  
+
 
