@@ -4,13 +4,27 @@
             udate {{ $user->name }}
         </h2>
     </x-slot>
-
+    <x-jet-validation-errors class="mb-4" />
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <form action="{{route('admin.users.update',$user->id)}}" method="post">
                     @csrf
                     @method('PATCH')
+
+                    <div>
+                        <x-jet-label for="name" value="{{ __('Name') }}" class=" mt-2 ml-5" />
+                        <x-jet-input id="name" class="block mt-2 ml-5  w-64" type="text" name="name" :value="old('name')?? $user->name" required autofocus />
+                    </div>
+                    
+                    <div>
+                        <x-jet-label for="email" value="{{ __('Email') }}" class=" mt-2 ml-5" />
+                        <x-jet-input id="email" class="block mt-2 ml-5  w-64" type="email" name="email" :value="old('name')?? $user->email" required autofocus />
+                    </div>
+
+
+
+
                     @foreach ($roles as $role)
                     <div class="flex p-4 ">
                         <div>

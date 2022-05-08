@@ -971,6 +971,9 @@ select {
 .m-4 {
   margin: 1rem;
 }
+.m-1 {
+  margin: 0.25rem;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1046,6 +1049,9 @@ select {
 }
 .-mt-px {
   margin-top: -1px;
+}
+.ml-5 {
+  margin-left: 1.25rem;
 }
 .block {
   display: block;
@@ -1145,6 +1151,12 @@ select {
 }
 .w-2\/12 {
   width: 16.666667%;
+}
+.w-56 {
+  width: 14rem;
+}
+.w-64 {
+  width: 16rem;
 }
 .min-w-0 {
   min-width: 0px;
