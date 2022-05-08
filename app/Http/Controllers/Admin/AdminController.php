@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class AdminController extends Controller
 {
@@ -67,6 +68,11 @@ class AdminController extends Controller
      */
     public function edit(User $user)
     {
+
+        if (! Gate::allows('edit-users')) {
+           return redirect()->route('admin.users.index');
+        }
+        
         $roles=Role::all();
         return view('admin.users.edit',['user'=> $user,'roles'=>$roles]);
     }
@@ -93,10 +99,13 @@ class AdminController extends Controller
      */
     public function destroy(User $user)
     {
+        if (! Gate::allows('delete-users')) {
+            return redirect()->route('admin.users.index');
+         }
         $user->roles()->detach();
         $user->delete();
         return redirect()->route('admin.users.index');
-        
+
 
     }
 }

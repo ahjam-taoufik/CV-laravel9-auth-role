@@ -100,9 +100,14 @@
                                 {{ __('Profile') }}
                             </x-jet-dropdown-link>
 
-                            <x-jet-dropdown-link href="{{ route('admin.users.index') }}">
+                            <!-- List of users -->
+
+                            @can('admin-author-users')   
+                              <x-jet-dropdown-link href="{{ route('admin.users.index') }}">
                                 List of users
-                            </x-jet-dropdown-link>
+                              </x-jet-dropdown-link>
+                            @endcan
+
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
