@@ -29,7 +29,7 @@ Route::middleware([
 });
 
 
-Route::prefix('admin')->name('admin.')->middleware('can:admin-author-users')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('can:route-list-users')->group(function () {
 
     Route::resource('users', AdminController::class);
 });

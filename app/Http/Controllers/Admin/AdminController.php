@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class AdminController extends Controller
@@ -23,7 +24,8 @@ class AdminController extends Controller
     public function index()
     {
 
-        $users = User::latest()->get();
+        // $users = User::all()->whereNotIn('name','superAdmin');
+        $users = User::all();
        
         return view('admin.users.index')->with('users', $users);
     }
@@ -67,9 +69,11 @@ class AdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
-    {
+    {  
+       
+         
 
-        if (! Gate::allows('edit-users')) {
+        if (! Gate::allows('edit-table-users')) {
            return redirect()->route('admin.users.index');
         }
         
@@ -86,8 +90,14 @@ class AdminController extends Controller
      */
     public function update(Request $request, User $user)
     {
+     
       
-        $user->roles()->sync($request->roles);
+        if ( Gate::allows('superAdmin')) { 
+            $user->roles()->sync($request->roles);
+         }
+
+
+      
 
         $user->name=$request->name;
         $user->email=$request->email;
@@ -103,7 +113,7 @@ class AdminController extends Controller
      */
     public function destroy(User $user)
     {
-        if (! Gate::allows('delete-users')) {
+        if (! Gate::allows('superAdmin')) {
             return redirect()->route('admin.users.index');
          }
         $user->roles()->detach();

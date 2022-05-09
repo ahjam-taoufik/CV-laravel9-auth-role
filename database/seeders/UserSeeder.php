@@ -20,6 +20,12 @@ class UserSeeder extends Seeder
         // User::truncate();
         DB::table('role_user')->truncate();
        
+                    $superAdmin=User::create([
+                    'name' => 'superAdmin',
+                    'email' => 'superAdmin@superAdmin.com',
+                    'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' // password
+                    ]);
+
                     $admin=User::create([
                     'name' => 'admin',
                     'email' => 'admin@admin.com',
@@ -38,6 +44,7 @@ class UserSeeder extends Seeder
                     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' // password
                     ]);
 
+                    $superAdmin->roles()->attach(Role::where('name', 'superAdmin')->first());                                               
                     $admin->roles()->attach(Role::where('name', 'admin')->first());
                     $author->roles()->attach(Role::where('name', 'author')->first());
                     $user->roles()->attach(Role::where('name', 'user')->first());

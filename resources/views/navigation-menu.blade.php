@@ -102,7 +102,7 @@
 
                             <!-- List of users -->
 
-                            @can('admin-author-users')   
+                            @can('show-menu-list-users')   
                               <x-jet-dropdown-link href="{{ route('admin.users.index') }}">
                                 List of users
                               </x-jet-dropdown-link>
