@@ -70,8 +70,19 @@ class AdminController extends Controller
      */
     public function edit(User $user)
     {  
+        
+        if($user->id === 1){	
+            // return redirect()->back()->with('error','You can not edit super admin');
+            abort(403, 'You can not edit this User1');
+        }
        
-         
+        $roles_test= $user->roles->pluck('name');
+        if(($roles_test->contains('superAdmin')) && (Auth::user()->id != 1)  ){	
+            // return redirect()->back()->with('error','You can not edit super admin');
+            abort(403, 'You can not edit this User');
+        }
+
+      
 
         if (! Gate::allows('edit-table-users')) {
            return redirect()->route('admin.users.index');
