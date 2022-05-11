@@ -29,6 +29,8 @@ Route::middleware([
 });
 
 
+
+// Path: routes\web.php
 Route::prefix('admin')->name('admin.')->middleware('can:route-list-users')->group(function () {
 
     Route::resource('users', AdminController::class);
